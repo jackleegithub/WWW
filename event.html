@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta http-equiv="X-UA-Compatible" content="ie=edge">
+      <title>JavaScript Event</title>
+      <style>
+         body{height:1000px;}
+         div{
+            width:80%;
+            height:60%;
+            background-color: red;
+         }
+         div>div{background-color:green;}
+         div>div>div{background-color: blue;}
+         div>div>div>div{background-color: yellow;}
+      </style>
+   </head>
+   <body>
+      <div class="first">
+         <div class="second">
+            <div class="third">
+               <div class="fourth"></div>
+            </div>
+         </div>
+      </div>
+      <script>
+         /*
+         参考网址：https://www.cnblogs.com/songyaqi/p/5204143.html
+            * 事件对象 event, 保存着有关事件的附加信息，例如发生事件的对象，鼠标的按键、坐标、键盘等等
+            * 事件发生时会产生事件对象
+            * 事件流
+               * 事件冒泡 从最内向外依次发生事件，微软模式， false
+               * 事件捕获 从顶层到最底层，网景模式， ture
+               为了兼容冒泡和捕获，e.addEventListener(
+                     eventType, //事件类型
+                     function(e){ ... }, //事件回调函数
+                     booleanVale //false:事件冒泡，true:事件捕获
+               )
+               删除事件处理是e.removeEventListener(eventType, eventHandle)
+
+         */
+         var divs = [document.querySelector('div[class="first"]'),
+               document.querySelector('div[class="second"]'),
+               document.querySelector('div[class="third"]'),
+               document.querySelector('div[class="fourth"]')],
+            bl = true;
+         
+         for(var i = 0, len = divs.length; i < len; i++){
+            divs[i].addEventListener("click",
+                                    function(e){
+                                       console.log(this.attributes[0]);
+                                    },
+                                    bl
+            );
+         }
+         document.getElementsByTagName("body")[0].addEventListener("keyup",
+            function(e){
+               console.log(e.keyCode);
+            },
+            false
+         );
+      </script>
+   </body>
+</html>
